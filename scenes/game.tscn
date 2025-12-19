@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3 uid="uid://d1uv4tkv51qig"]
+
+[ext_resource type="Script" uid="uid://bntjef1yxr36j" path="res://scripts/game.gd" id="1_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://beibjy0ijyn33" path="res://scenes/floor.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://dhgve0agw3miu" path="res://scenes/dinosaur.tscn" id="2_yqjtg"]
+[ext_resource type="FontFile" uid="uid://c726vfc0nc31b" path="res://assets/fonts/retro.ttf" id="4_iywne"]
+[ext_resource type="PackedScene" uid="uid://bn8ymi7t1suwy" path="res://scenes/paralax_background.tscn" id="4_lbhrr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbhrr"]
+font = ExtResource("4_iywne")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_lnu2h"]
+font = ExtResource("4_iywne")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_iywne"]
+font = ExtResource("4_iywne")
+font_size = 32
+
+[node name="game" type="Node2D"]
+script = ExtResource("1_lnu2h")
+
+[node name="Floor" parent="." instance=ExtResource("1_uwrxv")]
+
+[node name="Dinosaur" parent="." instance=ExtResource("2_yqjtg")]
+position = Vector2(146, 502)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 329)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Score" type="Label" parent="HUD"]
+top_level = true
+offset_top = 6.0
+offset_right = 328.0
+offset_bottom = 51.0
+text = "score: 100"
+label_settings = SubResource("LabelSettings_lbhrr")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TitleScreen" type="Label" parent="HUD"]
+offset_left = 33.0
+offset_top = 287.0
+offset_right = 1085.0
+offset_bottom = 375.0
+text = "Press Spacebar to start the game !"
+label_settings = SubResource("LabelSettings_lnu2h")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="HUD"]
+wait_time = 0.665
+autostart = true
+
+[node name="Restart" type="Label" parent="HUD"]
+visible = false
+offset_left = 410.0
+offset_top = 309.0
+offset_right = 686.0
+offset_bottom = 354.0
+text = "Press r to restart !"
+label_settings = SubResource("LabelSettings_iywne")
+
+[node name="Background" parent="." instance=ExtResource("4_lbhrr")]
+
+[connection signal="timeout" from="HUD/Timer" to="." method="_on_timer_timeout"]
